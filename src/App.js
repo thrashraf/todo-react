@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect} from "react";
 import axios from "axios";
 import { Nav } from "./Components/Nav/Nav";
 import { Input } from "./Components/Input/Input";
@@ -10,8 +10,9 @@ import { Control } from "./Components/Control/Control";
 
 function App() {
 
-  const [theme, setTheme] = useState('light');
+  // const [theme, setTheme] = useState('light');
   const [data, setData] = useState(null);
+  const [filter, setFilter] = useState('All');
 
 
 
@@ -24,12 +25,15 @@ function App() {
           todos.push({id: key, data: data[key].name, check: data[key].check})
         }
       setData(todos)
+
+
+      
       
     })
   }, [])
 
 
-
+ 
   return (
     
     <div className="bg-mobile-light bg-no-repeat bg-cover h-52 w-full laptop:bg-desktop-light py-10 px-10 bg-gray-50">
@@ -41,11 +45,11 @@ function App() {
         </header>
 
         <main>
-          <Lists data={data} setData={setData} />
+          <Lists data={data} setData={setData} filter={filter} />
         </main>
 
         <footer>
-          <Control />
+          <Control setFilter={setFilter}/>
         </footer>
       </section>
   

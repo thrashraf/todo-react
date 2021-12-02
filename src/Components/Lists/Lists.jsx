@@ -1,13 +1,9 @@
-import { useState } from 'react'
 import axios from 'axios'
-
 import React from 'react'
 import deleteIcon from '../../assets/delete.png'
 import checkIcon from '../../assets/icon-check.svg'
 
 export const Lists = props => {
-
-    const [check, setCheck] = useState(false)
 
     const checkListStyle = () => {
 
@@ -17,22 +13,52 @@ export const Lists = props => {
     }
 
     const checkHandler = id => {
-            console.log(id)
-            axios.patch(`https://react-hooks-1b64f-default-rtdb.firebaseio.com/todo/${id}.json`, {check: !check})
-            .then(res => console.log(res))
-            .catch(err => console.log(err))
-            const index = props.data.findIndex(list => {
-                return list.id === id
-            })
+
+            const index = props.data.findIndex(list => list.id === id);
+
+            const data = [...props.data]
+            data[index].check = !data[index].check
+
+            props.setData(data);
             
-            console.log(index)
+            axios.patch(`https://react-hooks-1b64f-default-rtdb.firebaseio.com/todo/${id}.json`, {check: props.data[index].check})
+            .then(res => {
+                
+                console.log(res)  
+            })
+            .catch(err => console.log(err))
     }
 
 
+    const deleteListhandler = id => {
+        axios.delete(`https://react-hooks-1b64f-default-rtdb.firebaseio.com/todo/${id}.json`) 
+        .then(res => {
+            console.log(res)
+
+            const index = props.data.findIndex(list => list.id === id);
+            const data = [...props.data]
+
+            data.splice(index, 1)
+
+            props.setData(data)
+        })
+        .catch(err => console.log(err))
+    }
+
     return (
         <div className="mt-10">
-            {props.data ? props.data.map(list => {
-            console.log(list)
+            {props.data ? props.data.filter(list => {
+
+                if (props.filter === 'Active') {
+                     return (!list.check)
+                } else if (props.filter === 'Completed') {
+                    return (list.check)
+                } else {
+                    return list
+                }
+
+            }).map(list => {
+            
             return (
                 <section className="flex justify-between  bg-white px-7 py-5 first:rounded-firstChild last:rounded-lastChild" key={list.id}>
                 <section className="flex">
@@ -41,11 +67,11 @@ export const Lists = props => {
                     </span>
                     <li className="list-none pl-5" style={list.check ? {textDecoration: 'line-through', textDecorationColor: 'gray'} : null} >{list.data}</li>
                 </section>
-                <img src={deleteIcon} alt="delete" className="w-5 h-5"/>
+                <img src={deleteIcon} alt="delete" className="w-5 h-5 cursor-pointer" onClick={deleteListhandler.bind(this, list.id)}/>
             </section>            
-           
+
             )
-        }) : 'loading'}
+        }) : 'loading...'}
         </div>
     )
 }

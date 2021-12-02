@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 
 
 export const Input = props => {
 
     const [input, setInput] = useState('');
-    const [isSubmit, setSubmit] = useState(false)
     
-
     const onSubmitHandler = e => {
         e.preventDefault()
         axios.post('https://react-hooks-1b64f-default-rtdb.firebaseio.com/todo.json',
