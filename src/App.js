@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Nav } from "./Components/Nav/Nav";
 import { Input } from "./Components/Input/Input";
@@ -10,10 +10,9 @@ import { Control } from "./Components/Control/Control";
 
 function App() {
 
-  // const [theme, setTheme] = useState('light');
+  const [dark, setDarkTheme] = useState(false);
   const [data, setData] = useState(null);
   const [filter, setFilter] = useState('All');
-
 
 
   useEffect(() => {
@@ -26,30 +25,32 @@ function App() {
         }
       setData(todos)
 
-
-      
-      
     })
   }, [])
 
+  useEffect(() => {
+      const rootEl = document.getElementById('root')
+      return dark ? rootEl.classList.add('dark') : rootEl.classList.remove('dark');
 
- 
+  }, [dark])
+
+
   return (
     
-    <div className="bg-mobile-light bg-no-repeat bg-cover h-52 w-full laptop:bg-desktop-light py-10 px-10 bg-gray-50">
+    <div className="w-full h-screen dark:bg-gray-900 transition-colors duration-300 ease-out">
    
-      <section className="max-w-lg tablet:m-auto">
-        <header>
-            <Nav />
+      <section className="tablet:m-auto  bg-no-repeat bg-cover h-52 w-full bg-desktop-light dark:bg-desktop-dark py-10 px-10">
+        <header className=" max-w-lg m-auto">
+            <Nav theme={dark} setTheme={setDarkTheme}/>
             <Input data={data} setData={setData}/>
         </header>
 
-        <main>
+        <main className="max-w-lg m-auto ">
           <Lists data={data} setData={setData} filter={filter} />
         </main>
 
-        <footer>
-          <Control setFilter={setFilter}/>
+        <footer className="max-w-lg m-auto">
+          <Control setFilter={setFilter} filter={filter}/>
         </footer>
       </section>
   

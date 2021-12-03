@@ -28,7 +28,7 @@ export const Input = props => {
         <div className="bg-white mt-5 rounded-input ">
             
             <form onSubmit={onSubmitHandler}>
-            <input placeholder="Create a new todo..."  className="text-sm py-3 px-5 w-full rounded-input focus:border-white focus:outline-none" value={input} onChange={(e) => setInput(e.target.value)}/>
+            <input placeholder="Create a new todo..."  className="text-sm py-3 px-5 w-full rounded-input focus:border-white focus:outline-none dark:bg-gray-800 dark:text-white transition-colors duration-300 ease-out" value={input} onChange={(e) => setInput(e.target.value)}/>
             </form>
         </div>
     )

@@ -23,7 +23,6 @@ export const Lists = props => {
             
             axios.patch(`https://react-hooks-1b64f-default-rtdb.firebaseio.com/todo/${id}.json`, {check: props.data[index].check})
             .then(res => {
-                
                 console.log(res)  
             })
             .catch(err => console.log(err))
@@ -39,7 +38,6 @@ export const Lists = props => {
             const data = [...props.data]
 
             data.splice(index, 1)
-
             props.setData(data)
         })
         .catch(err => console.log(err))
@@ -60,10 +58,10 @@ export const Lists = props => {
             }).map(list => {
             
             return (
-                <section className="flex justify-between  bg-white px-7 py-5 first:rounded-firstChild last:rounded-lastChild" key={list.id}>
+                <section className="flex justify-between  bg-white px-7 py-5 first:rounded-firstChild last:rounded-lastChild dark:bg-gray-800 dark:text-white dark:line-through transition-colors duration-300 ease-out"  key={list.id}>
                 <section className="flex">
-                    <span onClick={checkHandler.bind(this, list.id)} className="w-6 h-6 bg-white border border-gray-400 rounded-full" style={list.check ? checkListStyle() : null}>
-                        <img src={checkIcon} alt="check" className="w-3 h-3 relative top-1 left-1"/>
+                    <span onClick={checkHandler.bind(this, list.id)} className="w-6 h-6 bg-white border border-gray-400 rounded-full dark:bg-gray-900 dark:border-gray-900" style={list.check ? checkListStyle() : null}>
+                        <img src={checkIcon} alt="check" className="w-3 h-3 relative top-1 left-1" style={{'display': list.check ? 'block' : 'none'}}/>
                     </span>
                     <li className="list-none pl-5" style={list.check ? {textDecoration: 'line-through', textDecorationColor: 'gray'} : null} >{list.data}</li>
                 </section>
