@@ -44,7 +44,7 @@ export const Lists = props => {
     }
 
     return (
-        <div className="mt-10">
+        <div className="mt-10 text-center">
             {props.data ? props.data.filter(list => {
 
                 if (props.filter === 'Active') {
